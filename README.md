@@ -1,7 +1,7 @@
 epages REST API for Python
 ==========================
 
-See [ePages API](https://developer.epages.com/).
+See [epages API](https://developer.epages.com/).
 
 
 Installation
