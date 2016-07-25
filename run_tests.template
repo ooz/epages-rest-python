@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export EPAGES_HOST="your.domain.here"
+export EPAGES_SHOP="YOUR_EPAGES_SHOP_NAME"
+export EPAGES_TOKEN="yOuRaPiKeY"
+
+make test
