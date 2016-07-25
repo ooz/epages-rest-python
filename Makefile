@@ -2,17 +2,8 @@ init:
 	pip install -r requirements.txt
 
 test:
-	# Make sure the environment variables are set!
-	ifndef EPAGES_HOST
-    $(error EPAGES_HOST is undefined)
-	endif
-	ifndef EPAGES_SHOP
-    $(error EPAGES_SHOP is undefined)
-	endif
-	ifndef EPAGES_TOKEN
-    $(error EPAGES_TOKEN is undefined)
-	endif
-	# Execute all tests
-	@python -m unittest discover tests
+	@python -m unittest discover tests \
+	|| (echo "Tests failed. Did you set the environment variables EPAGES_HOST, \
+	EPAGES_SHOP and EPAGES_TOKEN?")
 
 .PHONY: init test
