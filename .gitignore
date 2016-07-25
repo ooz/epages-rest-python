@@ -1,2 +1,6 @@
 __main__.py
 run_tests.sh
+
+scripts/cacert.pem
+scripts/privkey.pem
+scripts/run_callback.sh

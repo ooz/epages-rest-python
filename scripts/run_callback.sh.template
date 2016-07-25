@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CLIENT_ID="YOUR-CLIENT-ID-HERE"
+CLIENT_SECRET="yOuRcLiEnTsEcReThErE"
+
+sudo python callback.py ${CLIENT_ID} ${CLIENT_SECRET}
