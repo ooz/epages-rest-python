@@ -49,33 +49,35 @@ class HTTPClient(object):
             self._protocol = HTTPClient._HTTPS
 
 
-    def get(self, ressource=u"", headers=None, params=None, data=None):
-        return self._request(requests.get, ressource, headers, params)
+    def get(self, ressource=u"", headers=None, params=None, json=None):
+        return self._request(requests.get, ressource, headers, params, json)
 
-    def post(self, ressource=u"", headers=None, params=None, data=None):
-        return self._request(requests.post, ressource, headers, params)
+    def post(self, ressource=u"", headers=None, params=None, json=None):
+        return self._request(requests.post, ressource, headers, params, json)
 
-    def put(self, ressource=u"", headers=None, params=None, data=None):
-        return self._request(requests.put, ressource, headers, params)
+    def put(self, ressource=u"", headers=None, params=None, json=None):
+        return self._request(requests.put, ressource, headers, params, json)
 
-    def delete(self, ressource=u"", headers=None, params=None, data=None):
-        return self._request(requests.delete, ressource, headers, params)
+    def delete(self, ressource=u"", headers=None, params=None, json=None):
+        return self._request(requests.delete, ressource, headers, params, json)
 
-    def patch(self, ressource=u"", headers=None, params=None, data=None):
-        return self._request(requests.patch, ressource, headers, params)
+    def patch(self, ressource=u"", headers=None, params=None, json=None):
+        return self._request(requests.patch, ressource, headers, params, json)
 
-    def _request(self, method, ressource=u"", headers=None, params=None, data=None):
+    def _request(self, method, ressource=u"", headers=None, params=None, json=None):
         """Executes a HTTP request.
         Args:
             ressource (unicode): URI of the ressource.
             headers (dict): Header dictionary or None. Default: None.
             params (dict): Parameters dictionary or None. Default: None.
+            json (dict): JSON payload/data dictionary or None. Default: None.
         Return:
-            JSON response.
+            JSON response. If it's a 204 (No Content) response, the HTTP status
+            code is returned.
         """
         headers = headers or {}
         params = params or {}
-        data = data or {}
+        json = json or {}
 
         target_headers = self._default_headers.copy()
         target_headers.update(headers)
@@ -83,11 +85,13 @@ class HTTPClient(object):
             target_headers["Authorization"] = "Bearer " + self._token
         target_url = self._protocol + self._host + u"/rs/shops/" + self._shop + ressource
 
-        response = method(target_url, headers=target_headers, params=params, data=data)
+        response = method(target_url, headers=target_headers, params=params, json=json)
 
         # Check for 4xx or 5xx HTTP errors
         if str(response.status_code)[0] in ["4", "5"]:
             raise RESTError(response)
+        if response.status_code in [204]:
+            return response.status_code
         return response.json()
 
 
