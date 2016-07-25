@@ -49,22 +49,22 @@ class HTTPClient(object):
             self._protocol = HTTPClient._HTTPS
 
 
-    def get(self, ressource=u"", headers=None, params=None):
+    def get(self, ressource=u"", headers=None, params=None, data=None):
         return self._request(requests.get, ressource, headers, params)
 
-    def post(self, ressource=u"", headers=None, params=None):
+    def post(self, ressource=u"", headers=None, params=None, data=None):
         return self._request(requests.post, ressource, headers, params)
 
-    def put(self, ressource=u"", headers=None, params=None):
+    def put(self, ressource=u"", headers=None, params=None, data=None):
         return self._request(requests.put, ressource, headers, params)
 
-    def delete(self, ressource=u"", headers=None, params=None):
+    def delete(self, ressource=u"", headers=None, params=None, data=None):
         return self._request(requests.delete, ressource, headers, params)
 
-    def patch(self, ressource=u"", headers=None, params=None):
+    def patch(self, ressource=u"", headers=None, params=None, data=None):
         return self._request(requests.patch, ressource, headers, params)
 
-    def _request(self, method, ressource=u"", headers=None, params=None):
+    def _request(self, method, ressource=u"", headers=None, params=None, data=None):
         """Executes a HTTP request.
         Args:
             ressource (unicode): URI of the ressource.
@@ -75,6 +75,7 @@ class HTTPClient(object):
         """
         headers = headers or {}
         params = params or {}
+        data = data or {}
 
         target_headers = self._default_headers.copy()
         target_headers.update(headers)
@@ -82,11 +83,11 @@ class HTTPClient(object):
             target_headers["Authorization"] = "Bearer " + self._token
         target_url = self._protocol + self._host + u"/rs/shops/" + self._shop + ressource
 
-        response = method(target_url, headers=target_headers, params=params)
+        response = method(target_url, headers=target_headers, params=params, data=data)
 
         # Check for 4xx or 5xx HTTP errors
         if str(response.status_code)[0] in ["4", "5"]:
-            raise RESTError(response.json())
+            raise RESTError(response)
         return response.json()
 
 
