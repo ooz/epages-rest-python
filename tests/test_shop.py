@@ -11,10 +11,9 @@ class TestShop(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        host = os.environ['EPAGES_HOST']
-        shop = os.environ['EPAGES_SHOP']
+        api_url = os.environ['EPAGES_API_URL']
         token = os.environ['EPAGES_TOKEN']
-        TestShop.client = epages.HTTPClient(host, shop, token)
+        TestShop.client = epages.HTTPClient(api_url, token)
 
     def setUp(self):
         pass

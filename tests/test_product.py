@@ -13,10 +13,9 @@ class TestProduct(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        host = os.environ['EPAGES_HOST']
-        shop = os.environ['EPAGES_SHOP']
+        api_url = os.environ['EPAGES_API_URL']
         token = os.environ['EPAGES_TOKEN']
-        TestProduct.client = epages.HTTPClient(host, shop, token)
+        TestProduct.client = epages.HTTPClient(api_url, token)
         TestProduct.product_service = epages.ProductService(TestProduct.client)
 
     def setUp(self):
@@ -39,9 +38,16 @@ class TestProduct(unittest.TestCase):
             TestProduct.product_id = response["productId"]
         except epages.RESTError, error:
             print(unicode(error))
+            self.assertTrue(False, "Setting up a product should not fail!")
 
-    def test_shop(self):
-        pass
+    def test_product(self):
+        if TestProduct.product_id is not None:
+            try:
+                product = TestProduct.client.get(u"/products/" + TestProduct.product_id)
+                self.assertEquals(product["productNumber"], "1337", "Product number of created product should match for the requested product.")
+            except epages.RESTError, error:
+                print(unicode(error))
+                self.assertTrue(False, "Getting a product should not fail!")
 
     def tearDown(self):
         try:
@@ -50,6 +56,7 @@ class TestProduct(unittest.TestCase):
                 self.assertEquals(status_code, 204, "DELETE on product should yield 204!")
         except epages.RESTError, error:
             print(unicode(error))
+            self.assertTrue(False, "Deleting a product should not fail!")
 
     @classmethod
     def tearDownClass(cls):

@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export EPAGES_HOST="your.domain.here"
-export EPAGES_SHOP="YOUR_EPAGES_SHOP_NAME"
-export EPAGES_TOKEN="yOuRaPiKeY"
+export EPAGES_API_URL="https://your.domain.com/rs/shops/yourShopName"
+export EPAGES_TOKEN="yOuRaPiKeYhErE"
 
 make test

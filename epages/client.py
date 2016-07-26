@@ -13,41 +13,32 @@ class HTTPClient(object):
     """Client to connect to the ePages REST API.
     """
 
-    _HTTP = u"http://"
-    _HTTPS = u"https://"
     _URI_SEP = u"/"
 
-    def __init__(self, host, shop, token=u"", ssl=True):
+    def __init__(self, api_url, token=u""):
         """Initializer.
         Args:
-            host:  The host URL, e.g. www.example.com as unicode.
-            shop:  The ePages shop name as unicode.
-            token: The OAUTH2 security token. Default: empty unicode.
-                   If empty: don't perform authorization.
-            ssl:   Flag whether to use SSL encryption. Default: True.
+            api_url: The epages API URL containing the shops domain and shop
+                     name. Usually looks like this:
+                     https://your.domain.com/rs/shops/yourShopName
+            token:   The OAUTH2 security token. Default: empty unicode.
+                     If empty: don't perform authorization.
         """
         super(HTTPClient, self).__init__()
-        self._host = host
-        self._shop = shop
-        self._token = token
+
+        self.api_url = api_url
+        self.token = token
+
+        # Construct default headers
         self._default_headers = {}
         self._default_headers["Accept"] = u"application/vnd.epages.v1+json"
         self._default_headers["Content-Type"] = u"application/json"
+        if self.token != u"":
+            self._default_headers["Authorization"] = "Bearer " + self.token
 
-        # Remove protocol from host
-        if self._host.startswith(HTTPClient._HTTP):
-            self._host = self._host.replace(HTTPClient._HTTP, u"")
-        elif self._host.startswith(HTTPClient._HTTPS):
-            self._host = self._host.replace(HTTPClient._HTTPS, u"")
-
-        # Remove trailing / from host
-        if self._host.endswith(HTTPClient._URI_SEP):
-            self._host = self._host[:-1]
-
-        self._protocol = HTTPClient._HTTP
-        if ssl:
-            self._protocol = HTTPClient._HTTPS
-
+        # Remove trailing / from api_url
+        if self.api_url.endswith(HTTPClient._URI_SEP):
+            self.api_url = self.api_url[:-1]
 
     def get(self, ressource=u"", headers=None, params=None, json=None):
         return self._request(requests.get, ressource, headers, params, json)
@@ -81,9 +72,8 @@ class HTTPClient(object):
 
         target_headers = self._default_headers.copy()
         target_headers.update(headers)
-        if self._protocol == HTTPClient._HTTPS:
-            target_headers["Authorization"] = "Bearer " + self._token
-        target_url = self._protocol + self._host + u"/rs/shops/" + self._shop + ressource
+
+        target_url = self.api_url + ressource
 
         response = method(target_url, headers=target_headers, params=params, json=json)
 
@@ -93,7 +83,3 @@ class HTTPClient(object):
         if response.status_code in [204]:
             return response.status_code
         return response.json()
-
-
-if __name__ == '__main__':
-    print u"Testing " + __file__
