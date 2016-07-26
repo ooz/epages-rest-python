@@ -19,17 +19,17 @@ Usage
 
     client = epages.HTTPClient("https://your.domain.com/rs/shops/yourShopName",
                                "yOuRaPiKeYhErE")
+
+    # Get the shop information
     shop = client.get("") # or client.get("/")
     print(shop)
 
-    params = {
-
-    }
-
+    # Create a new product
     payload = {
         "productNumber": "1337"
     }
-    new_product
+    new_product = client.post("/products", json=payload)
+    print(new_product)
 
 Testing
 -------
