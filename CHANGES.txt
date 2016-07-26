@@ -1,0 +1,5 @@
+0.2.0       2016-07-26
+
+- Simplify HTTPClient constructor:
+  You just need to pass the epages API URL and an optional access token now.
+- Convert README to rst
