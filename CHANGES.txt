@@ -1,3 +1,8 @@
+0.2.2       2016-07-27
+
+- Add option to skip certificate validation in HTTPClient
+
+
 0.2.1       2016-07-27
 
 - Update Usage section in README

@@ -15,7 +15,7 @@ class HTTPClient(object):
 
     _URI_SEP = u"/"
 
-    def __init__(self, api_url, token=u""):
+    def __init__(self, api_url, token=u"", verify=True):
         """Initializer.
         Args:
             api_url: The epages API URL containing the shops domain and shop
@@ -28,6 +28,7 @@ class HTTPClient(object):
 
         self.api_url = api_url
         self.token = token
+        self.verify = verify
 
         # Construct default headers
         self._default_headers = {}
@@ -75,7 +76,8 @@ class HTTPClient(object):
 
         target_url = self.api_url + ressource
 
-        response = method(target_url, headers=target_headers, params=params, json=json)
+        response = method(target_url, headers=target_headers, params=params,
+                          json=json, verify=self.verify)
 
         # Check for 4xx or 5xx HTTP errors
         if str(response.status_code)[0] in ["4", "5"]:
