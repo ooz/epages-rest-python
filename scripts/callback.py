@@ -11,7 +11,7 @@ CLIENT_SECRET = sys.argv[2]
 
 @app.route("/")
 def root():
-    return "<h1>drakdrak.ddns.net</h1>"
+    return "<h1>ePages PythonDemo App</h1>"
 
 @app.route("/callback")
 def callback():
