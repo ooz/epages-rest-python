@@ -27,10 +27,10 @@ def read(*filenames, **kwargs):
 
 setup(
     name='epages-rest-python',
-    version='0.2.2',
+    version='0.2.3',
     url='https://github.com/ooz/epages-rest-python',
     author='Oliver Zscheyge',
-    description='The epages online shop API for Python',
+    description='The ePages online shop API for Python',
     long_description=read('README.rst'),
     license='MIT',
     author_email='oliverzscheyge@gmail.com',

@@ -1,3 +1,10 @@
+0.2.3       2016-10-25
+
+- Change name of the DemoApp
+- Rename epages to ePages in documentation
+- Update Flask + SSL tutorial
+
+
 0.2.2       2016-07-27
 
 - Add option to skip certificate validation in HTTPClient
