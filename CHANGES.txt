@@ -1,3 +1,8 @@
+0.2.4       2016-10-25
+
+- Remove product_service from epages package
+
+
 0.2.3       2016-10-25
 
 - Change name of the DemoApp
