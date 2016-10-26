@@ -75,6 +75,8 @@ class HTTPClient(object):
         target_headers.update(headers)
 
         target_url = self.api_url + ressource
+        if ressource.startswith(self.api_url):
+            target_url = ressource
 
         response = method(target_url, headers=target_headers, params=params,
                           json=json, verify=self.verify)
