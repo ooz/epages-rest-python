@@ -17,11 +17,12 @@ Usage
 
     import epages
 
-    client = epages.HTTPClient("https://your.domain.com/rs/shops/yourShopName",
+    api_url = "https://your.domain.com/rs/shops/yourShopName"
+    client = epages.HTTPClient(api_url,
                                "yOuRaPiKeYhErE")
 
     # Get the shop information
-    shop = client.get("") # or client.get("/")
+    shop = client.get("") # or client.get("/") or client.get(api_url)
     print(shop)
 
     # Create a new product
