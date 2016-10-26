@@ -1,3 +1,8 @@
+0.3.0       2016-10-26
+
+- Make ePages REST client handle absolute routes/paths/URLs as well
+
+
 0.2.4       2016-10-25
 
 - Remove product_service from epages package

@@ -27,7 +27,7 @@ def read(*filenames, **kwargs):
 
 setup(
     name='epages-rest-python',
-    version='0.2.4',
+    version='0.3.0',
     url='https://github.com/ooz/epages-rest-python',
     author='Oliver Zscheyge',
     description='The ePages online shop API for Python',
