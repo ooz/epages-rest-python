@@ -36,12 +36,12 @@ class ShopService(object):
 
         try:
             json_shop = self.client.get(params=params)
-            return Shop(json_shop[u"name"],
-                        json_shop[u"slogan"],
-                        json_shop[u"logoUrl"],
-                        json_shop[u"sfUrl"],
-                        json_shop[u"mboUrl"])
-        except RESTError, error:
+            return Shop(json_shop.get(u"name", u""),
+                        json_shop.get(u"slogan", u""),
+                        json_shop.get(u"logoUrl", u""),
+                        json_shop.get(u"sfUrl", u""),
+                        json_shop.get(u"mboUrl", u""))
+        except RESTError as error:
             print(unicode(error))
             return None
 
@@ -56,7 +56,7 @@ class ShopService(object):
             json_currencies = self.client.get(u"/currencies")
             return Currencies(json_currencies[u"default"],
                               json_currencies[u"items"])
-        except RESTError, error:
+        except RESTError as error:
             print(unicode(error))
             return None
 
@@ -71,6 +71,6 @@ class ShopService(object):
             json_locales = self.client.get(u"/locales")
             return Locales(json_locales[u"default"],
                            json_locales[u"items"])
-        except RESTError, error:
+        except RESTError as error:
             print(unicode(error))
             return None
