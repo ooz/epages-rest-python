@@ -1,40 +1,36 @@
 # -*- coding: utf-8 -*-
+'''
+description: Tests the shop resource
+author: Oliver Zscheyge <oliverzscheyge@gmail.com>
+'''
 
-import unittest
-import os
+from tests.context import \
+    epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN
 
-from context import epages
 
-class TestShop(unittest.TestCase):
+given_epages_base_shop()
 
-    client = None
+API_URL = EPAGES_BASE_API_URL
+TOKEN = EPAGES_BASE_TOKEN
 
-    @classmethod
-    def setUpClass(cls):
-        api_url = os.environ['EPAGES_API_URL']
-        token = os.environ['EPAGES_TOKEN']
-        TestShop.client = epages.HTTPClient(api_url, token)
+client = None
 
-    def setUp(self):
-        pass
 
-    def test_shop(self):
-        shop_service = epages.ShopService(TestShop.client)
+def given_rest_client():
+    global client
+    client = epages.HTTPClient(API_URL, TOKEN)
 
-        shop = shop_service.get_shop()
-        currencies = shop_service.get_currencies()
-        locales = shop_service.get_locales()
+def test_shop_service():
+    given_rest_client()
 
-        self.assertTrue(unicode(shop).startswith(u"Shop("), u"Shops should be created.")
-        self.assertEqual(unicode(currencies), u"Currencies(GBP, [u'EUR', u'GBP', u'DKK', u'NOK', u'RUB', u'SEK'])")
-        self.assertEqual(unicode(locales), u"Locales(en_GB, [u'de_DE', u'en_GB', u'en_US', u'en_AU', u'en_CA', u'en_NZ', u'en_IE', u'ru_RU', u'it_IT', u'nl_NL', u'fi_FI', u'pt_PT', u'fr_FR', u'sv_SE', u'es_ES', u'ca_ES'])")
+    shop_service = epages.ShopService(client)
+    shop = shop_service.get_shop()
+    currencies = shop_service.get_currencies()
+    locales = shop_service.get_locales()
 
-    def tearDown(self):
-        pass
-
-    @classmethod
-    def tearDownClass(cls):
-        pass
-
-if __name__ == '__main__':
-    unittest.main()
+    assert unicode(shop).startswith(u"Shop("), u"Shop object should be created."
+    assert \
+        unicode(currencies) == \
+            u"Currencies(GBP, [u'EUR', u'GBP', u'DKK', u'NOK', u'RUB', u'SEK'])"
+    assert \
+        unicode(locales).startswith(u"Locales(en_GB, [u'de_DE'")

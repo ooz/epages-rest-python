@@ -6,7 +6,6 @@ author: Oliver Zscheyge <oliverzscheyge@gmail.com>
 
 from tests.context import \
     epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN
-import tests.context
 
 
 given_epages_base_shop()
