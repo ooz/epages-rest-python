@@ -49,10 +49,5 @@ Executing the tests requires a developerShop_.
     # Edit run_tests.sh: enter your epages host, shop and API key
     bash run_tests.sh
 
-Contributing
-------------
-
-TODO
-
 .. _ePagesAPI: https://developer.epages.com/apps
 .. _developerShop: http://www.epages.cloud/developer/
