@@ -32,6 +32,10 @@ init2: install_pipenv
 test:
 	pipenv run pytest
 
+# Publishing to pypi
+publish:
+	python setup.py publish
+
 # Travis CI
 ci_install:
 	pip install requests
@@ -45,4 +49,5 @@ ci_script:
 .PHONY: clean clean_vscode clean_all \
 init init2 install_pipenv install_dependencies \
 test \
+publish \
 ci_install ci_script
