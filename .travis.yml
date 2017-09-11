@@ -5,6 +5,7 @@ python:
 install:
   - "make install_pipenv"
   - "make install_dependencies"
+  - "make init2"
 
 script:
   - "make test"
