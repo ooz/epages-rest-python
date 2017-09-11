@@ -9,7 +9,7 @@ import requests
 
 from epages.error import RESTError
 
-class HTTPClient(object):
+class RESTClient(object):
     """Client to connect to the ePages REST API.
     """
 
@@ -24,7 +24,7 @@ class HTTPClient(object):
             token:   The OAUTH2 security token. Default: empty unicode.
                      If empty: don't perform authorization.
         """
-        super(HTTPClient, self).__init__()
+        super(RESTClient, self).__init__()
 
         self.api_url = api_url
         self.token = token
@@ -38,7 +38,7 @@ class HTTPClient(object):
             self._default_headers["Authorization"] = "Bearer " + self.token
 
         # Remove trailing / from api_url
-        if self.api_url.endswith(HTTPClient._URI_SEP):
+        if self.api_url.endswith(RESTClient._URI_SEP):
             self.api_url = self.api_url[:-1]
 
     def get(self, ressource=u"", headers=None, params=None, json=None):

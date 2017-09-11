@@ -26,8 +26,9 @@ Usage
     import epages
 
     api_url = "https://your.domain.com/rs/shops/yourShopName"
-    client = epages.HTTPClient(api_url,
-                               "yOuRaPiKeYhErE")
+    token = "yOuRaPiKeYhErE"
+    client = epages.RESTClient(api_url,
+                               token) # optional for public requests
 
     # Get the shop information
     shop = client.get("") # or client.get("/") or client.get(api_url)

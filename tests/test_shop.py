@@ -18,7 +18,7 @@ client = None
 
 def given_rest_client():
     global client
-    client = epages.HTTPClient(API_URL, TOKEN)
+    client = epages.RESTClient(API_URL, TOKEN)
 
 def test_shop_service():
     given_rest_client()

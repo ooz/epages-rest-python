@@ -18,7 +18,7 @@ client = None
 
 def given_rest_client():
     global client
-    client = epages.HTTPClient(API_URL, TOKEN)
+    client = epages.RESTClient(API_URL, TOKEN)
 
 def test_client_returning_same_for_relative_and_absolute_queries():
     given_rest_client()

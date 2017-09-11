@@ -15,7 +15,7 @@ class ShopService(object):
     def __init__(self, client):
         """Initializer.
         Args:
-            client (HTTPClient): The HTTPClient to make the HTTP calls with.
+            client (RESTClient): The RESTClient to make the HTTP calls with.
         """
         super(ShopService, self).__init__()
         self.client = client
