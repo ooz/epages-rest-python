@@ -1,35 +1,30 @@
 # -*- coding: utf-8 -*-
+'''
+description: Tests the ePages RESTClient
+author: Oliver Zscheyge <oliverzscheyge@gmail.com>
+'''
 
-import unittest
-import os
+from tests.context import \
+    epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN
+import tests.context
 
-from context import epages
 
-class TestClient(unittest.TestCase):
+given_epages_base_shop()
 
-    client = None
+API_URL = EPAGES_BASE_API_URL
+TOKEN = EPAGES_BASE_TOKEN
 
-    @classmethod
-    def setUpClass(cls):
-        api_url = os.environ['EPAGES_API_URL']
-        token = os.environ['EPAGES_TOKEN']
-        TestClient.client = epages.HTTPClient(api_url, token)
+client = None
 
-    def setUp(self):
-        pass
 
-    def test_client(self):
-        shop_relative = TestClient.client.get("/")
-        shop_absolute = TestClient.client.get(os.environ['EPAGES_API_URL'])
+def given_rest_client():
+    global client
+    client = epages.HTTPClient(API_URL, TOKEN)
 
-        self.assertEqual(unicode(shop_relative), unicode(shop_absolute))
+def test_client_returning_same_for_relative_and_absolute_queries():
+    given_rest_client()
 
-    def tearDown(self):
-        pass
+    shop_relative = client.get("/")
+    shop_absolute = client.get(API_URL)
 
-    @classmethod
-    def tearDownClass(cls):
-        pass
-
-if __name__ == '__main__':
-    unittest.main()
+    assert unicode(shop_relative) == unicode(shop_absolute)
