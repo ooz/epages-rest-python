@@ -17,4 +17,14 @@ install_dependencies:
 test:
 	pipenv run pytest
 
-.PHONY: init init2 install_pipenv install_dependencies test
+# Travis CI
+ci_install:
+	pip install requests
+	pip install six
+	pip install pytest
+
+ci_script:
+	pytest
+
+.PHONY: init init2 install_pipenv install_dependencies test \
+ci_install ci_script
