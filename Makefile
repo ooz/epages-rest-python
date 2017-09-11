@@ -2,13 +2,13 @@ init:
 	pipenv --three
 	pipenv install requests
 	pipenv install six
-	pipenv install pytest --dev
+	pipenv install --dev pytest
 
 init2:
 	pipenv --two
 	pipenv install requests
 	pipenv install six
-	pipenv install pytest --dev
+	pipenv install --dev pytest
 
 test:
 	@pipenv run python -m unittest discover tests \
