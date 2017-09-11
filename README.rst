@@ -1,6 +1,11 @@
 ePages REST API for Python
 ==========================
 
+.. image:: https://travis-ci.org/ooz/epages-rest-python.svg?branch=master
+    :target: https://travis-ci.org/ooz/epages-rest-python
+
+------------
+
 See ePagesAPI_ for detailed documentation.
 
 Installation
