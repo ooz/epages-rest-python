@@ -11,8 +11,8 @@ init2:
 	pipenv install --dev pytest
 
 test:
-	@pipenv run python -m unittest discover tests \
-	|| (echo "Tests failed. Did you install the requirements and set the \
-	environment variables EPAGES_API_URL and EPAGES_TOKEN?")
+	@pipenv run pytest \
+	|| (echo "Test(s) failed. Did you install the requirements and set the \
+	environment variables (run_tests.sh.template)?")
 
 .PHONY: init init2 test
