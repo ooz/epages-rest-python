@@ -15,8 +15,6 @@ install_dependencies:
 	pipenv install --dev pytest
 
 test:
-	@pipenv run pytest \
-	|| (echo "Test(s) failed. Did you install the requirements and set the \
-	environment variables (run_tests.sh.template)?")
+	pipenv run pytest
 
 .PHONY: init init2 install_pipenv install_dependencies test
