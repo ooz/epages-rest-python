@@ -1,6 +1,9 @@
 ePages REST API for Python
 ==========================
 
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+    :target: https://github.com/ooz/epages-rest-python
+
 .. image:: https://travis-ci.org/ooz/epages-rest-python.svg?branch=master
     :target: https://travis-ci.org/ooz/epages-rest-python
 
