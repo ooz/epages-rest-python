@@ -1,6 +1,13 @@
 #!/bin/bash
 
-export EPAGES_API_URL="https://your.domain.com/rs/shops/yourShopName"
-export EPAGES_TOKEN="yOuRaPiKeYhErE"
+# Insert your credentials to execute tests for ePages Base
+# Delete if you do not want to execute the ePages Base tests
+export EPAGES_BASE_API_URL="https://your.domain.com/rs/shops/yourShopName"
+export EPAGES_BASE_TOKEN="yOuRaPiKeYhErE"
+
+# Insert your credentials to execute tests for ePages Now
+# Delete if you do not want to execute the ePages Now tests
+export EPAGES_NOW_API_URL="https://your.domain.com/rs/shops/yourShopName"
+export EPAGES_NOW_TOKEN="yOuRaPiKeYhErE"
 
 make test
