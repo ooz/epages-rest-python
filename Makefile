@@ -9,7 +9,11 @@ clean:
 clean_vscode:
 	rm -rf .vscode
 
-clean_all: clean clean_vscode
+clean_pypi:
+	rm -rf dist
+	rm -rf epages_rest_python.egg-info
+
+clean_all: clean clean_vscode clean_pypi
 
 # Setup / dependencies
 install_pipenv:
@@ -46,7 +50,7 @@ ci_script:
 	pytest
 
 # Pwny
-.PHONY: clean clean_vscode clean_all \
+.PHONY: clean clean_vscode clean_pypi clean_all \
 init init2 install_pipenv install_dependencies \
 test \
 publish \
