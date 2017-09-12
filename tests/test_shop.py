@@ -20,17 +20,37 @@ def given_rest_client():
     global client
     client = epages.RESTClient(API_URL, TOKEN)
 
-def test_shop_service():
+def test_shop():
     given_rest_client()
 
-    shop_service = epages.ShopService(client)
-    shop = shop_service.get_shop()
-    currencies = shop_service.get_currencies()
-    locales = shop_service.get_locales()
+    shop = client.get('/')
 
-    assert unicode(shop).startswith(u"Shop("), u"Shop object should be created."
-    assert \
-        unicode(currencies) == \
-            u"Currencies(GBP, [u'EUR', u'GBP', u'DKK', u'NOK', u'RUB', u'SEK'])"
-    assert \
-        unicode(locales).startswith(u"Locales(en_GB, [u'de_DE'")
+    assert shop['slogan'] != ''
+    assert shop['name'] != ''
+    assert shop['logoUrl'].startswith('https://')
+    assert shop['mboUrl'].startswith('https://')
+    assert shop['sfUrl'].startswith('http')
+    assert shop['email'] != ''
+
+def test_locales():
+    given_rest_client()
+
+    locales = client.get('/locales')
+    print locales
+
+    assert locales['default'] == 'en_GB', \
+        'Default devshop should have en_GB as default locale'
+    assert 'de_DE' in locales['items'], \
+        'Default devshop should support de_DE locale'
+
+def test_currencies():
+    given_rest_client()
+
+    # when
+    currencies = client.get('/currencies')
+
+    # then
+    assert currencies['default'] == 'GBP', \
+        'Default devshop should have GBP as default currency'
+    assert 'EUR' in currencies['items'], \
+        'Default devshop should support EUR'
