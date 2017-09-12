@@ -1,3 +1,8 @@
+0.5.1       2017-09-12
+
+- Update LICENSE year range
+
+
 0.5.0       2017-09-12
 
 - Remove shop class and shop service
