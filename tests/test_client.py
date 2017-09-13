@@ -23,7 +23,9 @@ def given_rest_client():
 def test_client_returning_same_for_relative_and_absolute_queries():
     given_rest_client()
 
+    # when
     shop_relative = client.get("/")
     shop_absolute = client.get(API_URL)
 
+    # then
     assert unicode(shop_relative) == unicode(shop_absolute)

@@ -23,8 +23,10 @@ def given_rest_client():
 def test_shop():
     given_rest_client()
 
+    # when
     shop = client.get('/')
 
+    # then
     assert shop['slogan'] != ''
     assert shop['name'] != ''
     assert shop['logoUrl'].startswith('https://')
@@ -35,9 +37,10 @@ def test_shop():
 def test_locales():
     given_rest_client()
 
+    # when
     locales = client.get('/locales')
-    print locales
 
+    # then
     assert locales['default'] == 'en_GB', \
         'Default devshop should have en_GB as default locale'
     assert 'de_DE' in locales['items'], \
