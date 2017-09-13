@@ -51,10 +51,11 @@ Executing the tests requires a developerShop_.
 
 ::
 
-    cd epages-rest-python
     cp run_tests.sh.template run_tests.sh
+
     # Edit run_tests.sh: enter your epages host, shop and API key
-    bash run_tests.sh
+    
+    make test
 
 .. _ePagesAPI: https://developer.epages.com/apps
 .. _developerShop: http://www.epages.cloud/developer/

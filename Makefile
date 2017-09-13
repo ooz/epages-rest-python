@@ -34,6 +34,9 @@ init2: install_pipenv
 
 # Testing
 test:
+	./run_tests.sh
+
+test_pytest:
 	pipenv run pytest
 
 # Publishing to pypi
@@ -52,6 +55,6 @@ ci_script:
 # Pwny
 .PHONY: clean clean_vscode clean_pypi clean_all \
 init init2 install_pipenv install_dependencies \
-test \
+test test_pytest \
 publish \
 ci_install ci_script

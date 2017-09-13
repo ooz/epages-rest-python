@@ -10,4 +10,4 @@ export EPAGES_BASE_TOKEN="yOuRaPiKeYhErE"
 export EPAGES_NOW_API_URL="https://your.domain.com/rs/shops/yourShopName"
 export EPAGES_NOW_TOKEN="yOuRaPiKeYhErE"
 
-make test
+make test_pytest
