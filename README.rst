@@ -48,7 +48,7 @@ Usage
     new_product = client.post('/products', json=payload)
     print(new_product)
 
-For more examples see the `epages-rest-python-examples <https://github.com/ooz/epages-rest-python-examples>` repository.
+For more examples see the `epages-rest-python-examples <https://github.com/ooz/epages-rest-python-examples>`_ repository.
 
 Testing
 -------
