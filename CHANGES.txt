@@ -1,3 +1,8 @@
+0.6.0       2017-09-18
+
+- Add helper functions to calculate and verify callback signatures
+
+
 0.5.1       2017-09-12
 
 - Update LICENSE year range
