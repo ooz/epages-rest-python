@@ -29,3 +29,28 @@ def test_client_returning_same_for_relative_and_absolute_queries():
 
     # then
     assert unicode(shop_relative) == unicode(shop_absolute)
+
+def test_detecting_api_url_prefix():
+    # given
+    api_url = 'https://devshop.epages.com/rs/shops/lingering-hill-2037'
+    request_url = 'https://devshop.epages.com/rs/shops/lingering-hill-2037/orders'
+
+    # when
+    is_prefix = epages.is_api_url_prefix(request_url, api_url)
+
+    # then
+    assert is_prefix
+
+def test_still_detecting_api_url_prefix_despite_epages_now_bug():
+    # given
+    api_url = 'https://lingering-hill-2037.devshop.epages.com/rs/shops/lingering-hill-2037'
+    request_url = 'https://devshop.epages.com/rs/shops/lingering-hill-2037/orders'
+
+    # when
+    is_prefix = epages.is_api_url_prefix(request_url, api_url)
+
+    # then
+    assert is_prefix
+
+
+

@@ -75,7 +75,7 @@ class RESTClient(object):
         target_headers.update(headers)
 
         target_url = self.api_url + ressource
-        if ressource.startswith(self.api_url):
+        if is_api_url_prefix(ressource, self.api_url):
             target_url = ressource
 
         response = method(target_url, headers=target_headers, params=params,
@@ -87,3 +87,16 @@ class RESTClient(object):
         if response.status_code in [204]:
             return response.status_code
         return response.json()
+
+def is_api_url_prefix(request_url, api_url):
+    return request_url.startswith(api_url) \
+            or _is_epages_now_prefix(request_url, api_url)
+
+def _is_epages_now_prefix(request_url, api_url):
+    '''Workaround for a bug in ePages Now
+    '''
+    import re
+    api_url_without_protocol_and_shop_slug = re.sub(r'.*?\.', '', api_url, count=1)
+    request_url_without_protocol = re.sub(r'.*://', '', request_url, count=1)
+    return request_url_without_protocol.startswith(api_url_without_protocol_and_shop_slug)
+
