@@ -1,3 +1,8 @@
+0.6.1       2017-09-19
+
+- Introduce workaround for an issue with ePages Now API URLs
+
+
 0.6.0       2017-09-18
 
 - Add helper functions to calculate and verify callback signatures
