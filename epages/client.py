@@ -113,6 +113,16 @@ class RESTClient(object):
             return response.status_code
         return response.json()
 
+class BYDClient(RESTClient):
+    '''Convenience for beyond shop clients
+    '''
+    def __init__(self, api_url, client_id, client_secret):
+        super(BYDClient, self).__init__(api_url, \
+                                        client_id=client_id, \
+                                        client_secret=client_secret, \
+                                        beyond=True)
+
+
 def is_api_url_prefix(request_url, api_url):
     return request_url.startswith(api_url) \
             or _is_epages_now_prefix(request_url, api_url)

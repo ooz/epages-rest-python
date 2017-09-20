@@ -48,6 +48,19 @@ Usage
     new_product = client.post('/products', json=payload)
     print(new_product)
 
+Works with `ePages Now v2 (beyond) shops <https://signup.beyondshop.cloud/>`_, too:
+
+::
+
+    import epages
+    client = epages.BYDClient('https://yourshop.beyondshop.cloud/api',
+                              'client-id-of-your-app',
+                              'client-secret-of-your-app')
+
+    shop = client.get('/shop/shop')
+
+    print(shop['name'])
+
 For more examples see the `epages-rest-python-examples <https://github.com/ooz/epages-rest-python-examples>`_ repository.
 
 Testing

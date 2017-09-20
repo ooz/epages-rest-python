@@ -25,10 +25,9 @@ def given_rest_client():
 def given_beyond_rest_client():
     global client
     given_epages_byd_shop()
-    client = epages.RESTClient(EPAGES_BYD_API_URL, \
-                               client_id=EPAGES_BYD_CLIENT_ID, \
-                               client_secret=EPAGES_BYD_CLIENT_SECRET, \
-                               beyond=True)
+    client = epages.BYDClient(EPAGES_BYD_API_URL,
+                              EPAGES_BYD_CLIENT_ID,
+                              EPAGES_BYD_CLIENT_SECRET)
 
 def test_shop():
     given_rest_client()

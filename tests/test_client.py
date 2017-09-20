@@ -59,10 +59,9 @@ def test_getting_beyond_access_token():
     given_epages_byd_shop()
 
     # when
-    client = epages.RESTClient(EPAGES_BYD_API_URL, \
-                               client_id=EPAGES_BYD_CLIENT_ID, \
-                               client_secret=EPAGES_BYD_CLIENT_SECRET, \
-                               beyond=True)
+    client = epages.BYDClient(EPAGES_BYD_API_URL,
+                              EPAGES_BYD_CLIENT_ID,
+                              EPAGES_BYD_CLIENT_SECRET)
 
     # then
     assert client.token != '', 'Beyond client should have a token!'
