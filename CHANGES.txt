@@ -1,3 +1,8 @@
+0.7.0       2017-09-20
+
+- Add support for ePages Now v2 (beyond backend) shops
+
+
 0.6.1       2017-09-19
 
 - Introduce workaround for an issue with ePages Now API URLs
