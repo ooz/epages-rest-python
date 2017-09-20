@@ -10,4 +10,10 @@ export EPAGES_BASE_TOKEN="yOuRaPiKeYhErE"
 export EPAGES_NOW_API_URL="https://your.domain.com/rs/shops/yourShopName"
 export EPAGES_NOW_TOKEN="yOuRaPiKeYhErE"
 
+# Insert your ePages Now v2 (beyond backend) app credentials here
+# Delete if you do not want to execute the ePages Now v2 tests
+export EPAGES_BYD_API_URL="https://yourshop.beyondshop.cloud/api"
+export EPAGES_BYD_CLIENT_ID="client-id-of-your-app"
+export EPAGES_BYD_CLIENT_SECRET="client-secret-of-your-app"
+
 make test_pytest

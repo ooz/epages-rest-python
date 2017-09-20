@@ -5,7 +5,9 @@ author: Oliver Zscheyge <oliverzscheyge@gmail.com>
 '''
 
 from tests.context import \
-    epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN
+    epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN, \
+    given_epages_byd_shop, \
+    EPAGES_BYD_API_URL, EPAGES_BYD_CLIENT_ID, EPAGES_BYD_CLIENT_SECRET
 
 
 given_epages_base_shop()
@@ -52,5 +54,16 @@ def test_still_detecting_api_url_prefix_despite_epages_now_bug():
     # then
     assert is_prefix
 
+def test_getting_beyond_access_token():
+    global client
+    given_epages_byd_shop()
 
+    # when
+    client = epages.RESTClient(EPAGES_BYD_API_URL, \
+                               client_id=EPAGES_BYD_CLIENT_ID, \
+                               client_secret=EPAGES_BYD_CLIENT_SECRET, \
+                               beyond=True)
+
+    # then
+    assert client.token != '', 'Beyond client should have a token!'
 

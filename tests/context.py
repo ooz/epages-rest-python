@@ -19,8 +19,14 @@ EPAGES_BASE_TOKEN = os.environ.get('EPAGES_BASE_TOKEN', '')
 EPAGES_NOW_API_URL = os.environ.get('EPAGES_NOW_API_URL', '')
 EPAGES_NOW_TOKEN = os.environ.get('EPAGES_NOW_TOKEN', '')
 
+EPAGES_BYD_API_URL = os.environ.get('EPAGES_BYD_API_URL', '')
+EPAGES_BYD_CLIENT_ID = os.environ.get('EPAGES_BYD_CLIENT_ID', '')
+EPAGES_BYD_CLIENT_SECRET = os.environ.get('EPAGES_BYD_CLIENT_SECRET', '')
+
 EPAGES_API_URL = ''
 EPAGES_TOKEN = ''
+EPAGES_CLIENT_ID = ''
+EPAGES_CLIENT_SECRET = ''
 
 
 def is_epages_base_shop_present():
@@ -35,8 +41,14 @@ if is_epages_base_shop_present():
 if is_epages_now_shop_present():
     EPAGES_API_URL, EPAGES_TOKEN = EPAGES_NOW_API_URL, EPAGES_NOW_TOKEN
 
+def is_epages_byd_shop_present():
+    return EPAGES_BYD_API_URL != '' and \
+           EPAGES_BYD_CLIENT_ID != '' and \
+           EPAGES_BYD_CLIENT_SECRET != ''
+
 def is_any_epages_shop_present():
-    return EPAGES_API_URL != '' and EPAGES_TOKEN != ''
+    return EPAGES_API_URL != '' and EPAGES_TOKEN != '' or \
+            is_epages_byd_shop_present()
 
 @fixture
 def given_epages_base_shop():
@@ -45,6 +57,10 @@ def given_epages_base_shop():
 @fixture
 def given_epages_now_shop():
     assert is_epages_now_shop_present()
+
+@fixture
+def given_epages_byd_shop():
+    assert is_epages_byd_shop_present()
 
 @fixture
 def given_any_epages_shop():

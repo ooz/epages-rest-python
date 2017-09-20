@@ -5,7 +5,9 @@ author: Oliver Zscheyge <oliverzscheyge@gmail.com>
 '''
 
 from tests.context import \
-    epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN
+    epages, given_epages_base_shop, EPAGES_BASE_API_URL, EPAGES_BASE_TOKEN, \
+    given_epages_byd_shop, \
+    EPAGES_BYD_API_URL, EPAGES_BYD_CLIENT_ID, EPAGES_BYD_CLIENT_SECRET
 
 
 given_epages_base_shop()
@@ -19,6 +21,14 @@ client = None
 def given_rest_client():
     global client
     client = epages.RESTClient(API_URL, TOKEN)
+
+def given_beyond_rest_client():
+    global client
+    given_epages_byd_shop()
+    client = epages.RESTClient(EPAGES_BYD_API_URL, \
+                               client_id=EPAGES_BYD_CLIENT_ID, \
+                               client_secret=EPAGES_BYD_CLIENT_SECRET, \
+                               beyond=True)
 
 def test_shop():
     given_rest_client()
@@ -57,3 +67,13 @@ def test_currencies():
         'Default devshop should have GBP as default currency'
     assert 'EUR' in currencies['items'], \
         'Default devshop should support EUR'
+
+def test_beyond_shop():
+    given_beyond_rest_client()
+
+    # when
+    shop = client.get('/shop/shop') # This should actually be just '/shop', seems to be a bug in the API
+
+    # then
+    assert shop['_id'] != u'', 'Beyond devshop should have an ID!'
+    assert shop['name'] != u'', 'Beyond devshop should have a name!'

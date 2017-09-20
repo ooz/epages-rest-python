@@ -10,30 +10,42 @@ import requests
 from epages.error import RESTError
 
 class RESTClient(object):
-    """Client to connect to the ePages REST API.
-    """
+    '''Client to connect to the ePages REST API.
+    '''
 
-    _URI_SEP = u"/"
+    _URI_SEP = u'/'
 
-    def __init__(self, api_url, token=u"", verify=True):
-        """Initializer.
+    def __init__(self, api_url, token=u"", verify=True, \
+                 client_id=u'', client_secret=u'', beyond=False):
+        '''Initializer.
         Args:
             api_url: The epages API URL containing the shops domain and shop
                      name. Usually looks like this:
                      https://your.domain.com/rs/shops/yourShopName
             token:   The OAUTH2 security token. Default: empty unicode.
                      If empty: don't perform authorization.
-        """
+            verify:  SSL certificate validation.
+            client_id: Client ID of the app. Needed for beyond auth.
+            client_secret: Client secret of the app. Needed for beyond auth.
+        '''
         super(RESTClient, self).__init__()
 
+        self._default_headers = {}
         self.api_url = api_url
         self.token = token
         self.verify = verify
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.beyond = beyond
+        if self.beyond:
+            self.get_token()
 
         # Construct default headers
-        self._default_headers = {}
-        self._default_headers["Accept"] = u"application/vnd.epages.v1+json"
-        self._default_headers["Content-Type"] = u"application/json"
+        if self.beyond:
+            self._default_headers["Accept"] = u"application/hal+json"
+        else:
+            self._default_headers["Accept"] = u"application/vnd.epages.v1+json"
+            self._default_headers["Content-Type"] = u"application/json"
         if self.token != u"":
             self._default_headers["Authorization"] = "Bearer " + self.token
 
@@ -41,11 +53,24 @@ class RESTClient(object):
         if self.api_url.endswith(RESTClient._URI_SEP):
             self.api_url = self.api_url[:-1]
 
+    def get_token(self):
+        '''ePages Now v2 (Beyond backend) only
+        '''
+        assert self.beyond and self.client_id != u'' and self.client_secret != u''
+        params = {
+            'grant_type': 'client_credentials'
+        }
+        token_response = self.post('/oauth/token',
+                                   params=params,
+                                   auth=(self.client_id, self.client_secret))
+        self.token = token_response.get('access_token', '')
+        return self.token
+
     def get(self, ressource=u"", headers=None, params=None, json=None):
         return self._request(requests.get, ressource, headers, params, json)
 
-    def post(self, ressource=u"", headers=None, params=None, json=None):
-        return self._request(requests.post, ressource, headers, params, json)
+    def post(self, ressource=u"", headers=None, params=None, json=None, auth=None):
+        return self._request(requests.post, ressource, headers, params, json, auth)
 
     def put(self, ressource=u"", headers=None, params=None, json=None):
         return self._request(requests.put, ressource, headers, params, json)
@@ -56,7 +81,7 @@ class RESTClient(object):
     def patch(self, ressource=u"", headers=None, params=None, json=None):
         return self._request(requests.patch, ressource, headers, params, json)
 
-    def _request(self, method, ressource=u"", headers=None, params=None, json=None):
+    def _request(self, method, ressource=u"", headers=None, params=None, json=None, auth=None):
         """Executes a HTTP request.
         Args:
             ressource (unicode): URI of the ressource.
@@ -79,7 +104,7 @@ class RESTClient(object):
             target_url = ressource
 
         response = method(target_url, headers=target_headers, params=params,
-                          json=json, verify=self.verify)
+                          json=json, verify=self.verify, auth=auth)
 
         # Check for 4xx or 5xx HTTP errors
         if str(response.status_code)[0] in ["4", "5"]:
