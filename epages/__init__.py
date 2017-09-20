@@ -1,4 +1,4 @@
 # coding: utf-8
 
 from epages.client import *
-from epages.signature import *
+from epages.auth import *

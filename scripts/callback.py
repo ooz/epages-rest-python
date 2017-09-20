@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+
 from flask import Flask, request, redirect
 from requests import post
-import sys
+
+from epages import get_access_token
+
+
 app = Flask(__name__)
 
 CLIENT_ID = sys.argv[1]
 CLIENT_SECRET = sys.argv[2]
+
 
 @app.route("/")
 def root():
@@ -16,23 +22,22 @@ def root():
 @app.route("/callback")
 def callback():
     args = request.args
-    code = args.get("code", "")
-    access_token_url = args.get("access_token_url", "")
-    api_url = args.get("api_url", "")
-    return_url = args.get("return_url", "")
+    access_token, api_url, return_url = get_access_token(CLIENT_ID,
+                                                         CLIENT_SECRET,
+                                                         args)
 
-    print("code access_token_url api_url return_url:")
-    print(code)
-    print(access_token_url)
-    print(api_url)
-    print(return_url)
+    if access_token and api_url and return_url:
+        print("access_token: %s" % access_token)
+        print("api_url: %s" % api_url)
+        print("return_url: %s" % return_url)
+        return build_redirect(return_url)
 
-    if code != "" and access_token_url != "":
-        access_token = get_access_token(code, access_token_url)
-        print("Access_token:")
-        print(access_token)
+    return u'You do not belong here! Ksssh ksssh!', 403
 
+def build_redirect(return_url):
+    # Use this for automatic redirect:
     #return redirect(return_url, code=302) # Found
+    # Use this for manual return:
     return """<!DOCTYPE html>
 <html>
 <head>
@@ -41,25 +46,11 @@ def callback():
 </head>
 <body>
 <h1>Callback</h1>
-<p>Thanks for installing PythonDemo App! Hit the "return" link below to return to your Merchant Backoffice</p>
+<p>Thanks for installing PythonDemo App! Hit the "return" link below to return to your MBO/Commerce Cockpit</p>
 <a href="%s">return</a>
 </body>
 </html>
 """ % (return_url)
-
-def get_access_token(code, access_token_url):
-    payload = {
-        "code": code,
-        "client_id": CLIENT_ID,
-        "client_secret": CLIENT_SECRET,
-    }
-    try:
-        response = post(access_token_url, data=payload, verify=False)
-        response_json = response.json()
-        return response_json.get("access_token", None)
-    except:
-        pass
-    return None
 
 
 if __name__ == "__main__":
