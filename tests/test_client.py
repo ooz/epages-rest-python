@@ -64,5 +64,6 @@ def test_getting_beyond_access_token():
                               EPAGES_BYD_CLIENT_SECRET)
 
     # then
+    assert client.beyond, 'Client should be a beyond client!'
     assert client.token != '', 'Beyond client should have a token!'
 
