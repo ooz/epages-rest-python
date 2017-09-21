@@ -17,7 +17,7 @@ def verify_signature(code, access_token_url, client_secret, signature):
     '''
     return signature == calculate_signature(code, access_token_url, client_secret)
 
-def verify(client_secret, args):
+def verify_args(client_secret, args):
     '''Handier
     '''
     code = args.get('code', '')
@@ -30,7 +30,7 @@ def get_access_token(client_id, client_secret, args, verify=True):
     All-inclusive solution to all problems™
     '''
     access_token = None
-    if verify(client_secret, args):
+    if verify_args(client_secret, args):
         code = args.get('code', '')
         access_token_url = args.get('access_token_url', '')
         payload = {
