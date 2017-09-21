@@ -1,3 +1,8 @@
+0.8.1       2017-09-21
+
+- Fix a bug when getting an access token via the utility
+
+
 0.8.0       2017-09-21
 
 - Add utility functions for creating a callback handler and
