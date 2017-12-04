@@ -57,7 +57,7 @@ Works with `ePages Now v2 (beyond) shops <https://signup.beyondshop.cloud/>`_, t
                               'client-id-of-your-app',
                               'client-secret-of-your-app')
 
-    shop = client.get('/shop/shop')
+    shop = client.get('/shop')
 
     print(shop['name'])
 
