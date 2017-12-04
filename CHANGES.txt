@@ -1,3 +1,8 @@
+0.9.0       2017-12-04
+
+- Make non-json RESTError objects more verbose when printed
+
+
 0.8.1       2017-09-21
 
 - Fix a bug when getting an access token via the utility
