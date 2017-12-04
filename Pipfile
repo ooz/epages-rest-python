@@ -1,10 +1,15 @@
 [[source]]
+
 verify_ssl = true
 url = "https://pypi.python.org/simple"
 
+
 [dev-packages]
+
 pytest = "*"
 
+
 [packages]
+
 requests = "*"
 six = "*"
