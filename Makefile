@@ -36,8 +36,9 @@ init2: install_pipenv
 test:
 	./run_tests.sh
 
+## -s prevents pytest from capturing print calls
 test_pytest:
-	pipenv run pytest
+	pipenv run pytest -s
 
 # Publishing to pypi
 publish:
