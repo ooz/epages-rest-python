@@ -52,3 +52,24 @@ def is_epages_byd_shop_present():
 def is_any_epages_shop_present():
     return EPAGES_API_URL != '' and EPAGES_TOKEN != '' or \
             is_epages_byd_shop_present()
+
+# "with" interface implementations
+class given_rest_client(object):
+    def __enter__(self):
+        if is_epages_base_shop_present():
+            self.client = epages.RESTClient(EPAGES_BASE_API_URL,
+                                            EPAGES_BASE_TOKEN)
+            return self.client
+        return None
+
+    def __exit__(self, type, value, traceback):
+        pass
+
+class given_beyond_rest_client(given_rest_client):
+    def __enter__(self):
+        if is_epages_byd_shop_present():
+            self.client = epages.BYDClient(EPAGES_BYD_API_URL,
+                                           EPAGES_BYD_CLIENT_ID,
+                                           EPAGES_BYD_CLIENT_SECRET)
+            return self.client
+        return None
