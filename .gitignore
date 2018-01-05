@@ -1,4 +1,5 @@
 .cache/
+.vscode/
 
 __main__.py
 run_tests.sh
@@ -7,10 +8,7 @@ scripts/cacert.pem
 scripts/privkey.pem
 scripts/run_callback.sh
 
+Pipfile.lock
 *.egg-info*
-
 .tox/
 *.pyc
-
-Pipfile.lock
-.vscode/
