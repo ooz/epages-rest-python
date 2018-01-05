@@ -8,3 +8,8 @@ scripts/privkey.pem
 scripts/run_callback.sh
 
 *.egg-info*
+
+.tox/
+*.pyc
+
+Pipfile.lock
