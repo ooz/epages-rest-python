@@ -13,3 +13,4 @@ scripts/run_callback.sh
 *.pyc
 
 Pipfile.lock
+.vscode/
