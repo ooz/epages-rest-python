@@ -9,13 +9,21 @@ from requests import post
 
 def calculate_signature(code, access_token_url, client_secret):
     message = '%s:%s' % (code, access_token_url)
-    digest = hmac.new(client_secret, msg=message, digestmod=hashlib.sha256).digest()
-    return base64.b64encode(digest).decode()
+    digest = hmac.new(client_secret.encode('utf-8'),
+                      msg=message.encode('utf-8'),
+                      digestmod=hashlib.sha256).digest()
+    return base64.b64encode(digest)
+
 
 def verify_signature(code, access_token_url, client_secret, signature):
     '''Handy
     '''
-    return signature == calculate_signature(code, access_token_url, client_secret)
+    return signature.encode('utf-8') == calculate_signature(
+        code,
+        access_token_url,
+        client_secret
+    )
+
 
 def verify_args(client_secret, args):
     '''Handier
@@ -24,6 +32,7 @@ def verify_args(client_secret, args):
     access_token_url = args.get('access_token_url', '')
     signature = args.get('signature', '')
     return verify_signature(code, access_token_url, client_secret, signature)
+
 
 def get_access_token(client_id, client_secret, args, verify=True):
     '''Handiest
@@ -39,7 +48,8 @@ def get_access_token(client_id, client_secret, args, verify=True):
             "client_secret": client_secret,
         }
         try:
-            access_token = post(access_token_url, data=payload, verify=verify).json().get('access_token', None)
+            access_token = post(access_token_url, data=payload,
+                                verify=verify).json().get('access_token', None)
         except:
             pass
 
